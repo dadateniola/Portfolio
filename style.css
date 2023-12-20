@@ -1,0 +1,376 @@
+/* ClashGrotesk Font */
+@import url('./assets/fonts/ClashGrotesk_Complete/css/clash-grotesk.css');
+/* 
+font-family: 'ClashGrotesk-Variable';
+font-family: 'ClashGrotesk-Extralight';
+font-family: 'ClashGrotesk-Light';
+font-family: 'ClashGrotesk-Regular';
+font-family: 'ClashGrotesk-Medium';
+font-family: 'ClashGrotesk-Semibold';
+font-family: 'ClashGrotesk-Bold'; 
+*/
+
+/* GeneralSans Font */
+@import url('./assets/fonts/GeneralSans_Complete/css/general-sans.css');
+/*
+font-family: 'GeneralSans-Variable';
+font-family: 'GeneralSans-VariableItalic';
+font-family: 'GeneralSans-Extralight';
+font-family: 'GeneralSans-ExtralightItalic';
+font-family: 'GeneralSans-Light';
+font-family: 'GeneralSans-LightItalic';
+font-family: 'GeneralSans-Regular';
+font-family: 'GeneralSans-Italic';
+font-family: 'GeneralSans-Medium';
+font-family: 'GeneralSans-MediumItalic';
+font-family: 'GeneralSans-Semibold';
+font-family: 'GeneralSans-SemiboldItalic';
+font-family: 'GeneralSans-Bold';
+font-family: 'GeneralSans-BoldItalic';
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --light: 255, 255, 255;
+    --dark: 0, 0, 0;
+
+    --night: #0F0F0F;
+    --red-crayola: #EF2D56;
+    --cadet-gray: #A0A0A0;
+
+    --page-padding: 20px;
+    --indentation: 24vw;
+
+    --general: 'GeneralSans-Medium', Arial, sans-serif;
+    --general-reg: 'GeneralSans-Regular', Arial, sans-serif;
+
+    --clash: 'ClashGrotesk-Medium', Arial, sans-serif;
+}
+
+html,
+body {
+    background-color: var(--night);
+    /* scroll-behavior: smooth; */
+}
+
+body {
+    padding: 0 var(--page-padding);
+    width: 100%;
+    color: #ffffff;
+    font-family: var(--general);
+    overflow-x: hidden;
+    font-size: 0.9em;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+p {
+    line-height: 1.5;
+}
+
+section {
+    width: 100%;
+}
+
+
+
+.cap {
+    text-transform: capitalize;
+}
+
+.sub {
+    color: var(--cadet-gray);
+}
+
+.indent> :first-child {
+    width: var(--indentation);
+}
+
+.indent.mt> :last-child {
+    margin-top: 20px;
+}
+
+.indent.full> :last-child {
+    width: calc(100% - var(--indentation));
+}
+
+.flex {
+    display: flex;
+}
+
+.highlight {
+    color: var(--red-crayola);
+}
+
+.line {
+    margin-top: 80px;
+    border-top: 1px solid rgba(var(--light), 0.10);
+}
+
+.line-sm {
+    margin-top: 25px;
+    border-top: 1px solid rgba(var(--light), 0.10);
+}
+
+.line-bm>* {
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(var(--light), 0.10);
+}
+
+.line-bm> :first-child {
+    margin-top: 0;
+}
+
+.section-head {
+    margin: 20px 0;
+    font-size: 1.2em;
+    font-weight: 500;
+    text-transform: capitalize;
+    font-family: var(--clash);
+}
+
+.img-here {
+    overflow: hidden;
+}
+
+.img-here img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+header {
+    /* position: fixed; */
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: var(--page-padding) 0;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: rgba(15, 15, 15, 0.7);
+    border-bottom: 2px solid var(--night);
+    backdrop-filter: blur(5px); */
+    z-index: 100;
+}
+
+.links {
+    gap: 40px;
+}
+
+
+
+.hero {
+    height: 70vh;
+    display: flex;
+    align-items: end;
+}
+
+.hero-text {
+    padding-top: 8px;
+}
+
+.hero-intro h1 {
+    font-size: 50px;
+    font-family: var(--general);
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+
+
+.project-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-rows: repeat(3, 1fr); */
+    gap: 20px;
+}
+
+.project {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.project::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(var(--dark), 0.2);
+    z-index: 2;
+}
+
+.project-img {
+    position: relative;
+    height: 70vh;
+    filter: saturate(0);
+    transition: 0.5s;
+}
+
+.project-img img {
+    transition: 0.5s;
+}
+
+.project-text {
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.project:hover .project-img {
+    filter: saturate(1);
+}
+
+.project:hover .project-img img {
+    transform: scale(1.03);
+}
+
+
+
+.about-text {
+    width: 50%;
+}
+
+.contact-text h1,
+.about-text h1 {
+    font-family: var(--clash);
+    font-weight: 500;
+    font-size: 23px;
+    line-height: 1.6;
+}
+
+.about-text p {
+    margin-top: 10px;
+    font-size: 15px;
+    font-family: var(--general-reg);
+    line-height: 2;
+}
+
+
+
+.skills-box .skills-cont:first-child {
+    margin-top: 0;
+}
+
+.skills-cont {
+    margin-top: 20px;
+}
+
+.skills-row {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 40px;
+    padding-right: 10%;
+}
+
+.skill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+}
+
+.skill-img {
+    width: 45px;
+    height: 45px;
+    background-color: black;
+    padding: 8px;
+}
+
+.skill p {
+    font-size: 0.9em;
+}
+
+
+
+.exp-box-cont {
+    display: flex;
+    gap: 10px;
+    padding-right: 10%;
+}
+
+.exp-box-cont p {
+    width: 30%;
+    flex-grow: 1;
+}
+
+.exp-box-cont p:last-child {
+    flex-grow: 0;
+    width: 150px;
+}
+
+
+
+.contact-text {
+    width: 50%;
+}
+
+.contact-text h1 {
+    font-family: var(--general-reg);
+}
+
+.contact-cta {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding-right: 10%;
+}
+
+.contact-cta a {
+    display: block;
+    padding: 15px 30px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #FFF;
+    text-transform: capitalize;
+    font-family: var(--general-reg);
+}
+
+
+
+
+footer .flex {
+    margin: var(--page-padding) 0;
+    font-size: 1em;
+    align-items: end;
+    justify-content: space-between;
+}
+
+footer .get-in-touch {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+footer .container {
+    display: flex;
+    align-items: end;
+    gap: 5vw;
+}
+
+.foot-links {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
