@@ -36,9 +36,14 @@ function fillImgs() {
                     <div class="project-img img-here">
                         <img src="./assets/images/project (${i + 1}).png" alt="project">
                     </div>
-                    <div class="project-text cap">
-                        <p>name</p>
-                        <p class="sub">type</p>
+                    <div class="project-text">
+                        <div class="project-type cap">
+                            <p>UI/UX Design</p>
+                        </div>
+                        <div class="project-desc">
+                            <p class="cap">name</p>
+                            <p class="project-text-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam totam nulla a. Dicta.</p>
+                        </div>
                     </div>`
 
         project.classList.add("project")
