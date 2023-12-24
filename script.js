@@ -137,5 +137,5 @@ window.addEventListener("load", () => {
         behavior: "smooth"
     });
 
-    // new PageSetup();
+    new PageSetup();
 })
