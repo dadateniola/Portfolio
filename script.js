@@ -54,3 +54,81 @@ function fillImgs() {
 }
 
 fillImgs();
+
+
+class PageSetup {
+    constructor(params = {}) {
+        Object.assign(this, params);
+        this.init();
+    }
+
+    init() {
+        this.load();
+    }
+
+
+    static checkDeviceType() {
+        const mobileThreshold = 768;
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+        const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+        if (isTouchDevice && screenWidth <= mobileThreshold) {
+            return "is mobile";
+        } else {
+            return "is pc";
+        }
+    }
+
+    assignClones(element) {
+        const tagName = element.tagName;
+        const tag = create(tagName);
+
+        tag.innerHTML = element.innerHTML;
+        tag.classList.add("anim-text");
+
+        gsap.set(tag, { yPercent: 100 })
+
+        element.classList.add("overflow-h");
+        element.innerHTML = "";
+        element.appendChild(tag);
+
+        return tag;
+    }
+
+    load() {
+        const tl = gsap.timeline();
+        const navLinks = selectAll("header a, header p, .projects h1");
+        const heroText = selectAll(".hero-text p");
+        const heroIntro = selectAll(".hero-intro h1");
+        const projects = selectAll(".project");
+        const projectLine = select(".project-line");
+        const loaderBox = select(".loader-box");
+
+        heroText.forEach(e => this.assignClones(e));
+        heroIntro.forEach(e => this.assignClones(e));
+
+        tl
+            .set(navLinks, { opacity: 0 })
+            .set(projects, { y: 100, opacity: 0 })
+            .set(projectLine, { width: 0 })
+            .to(loaderBox, { opacity: 0 })
+            .call(() => select("loader").classList.add("hide"))
+            .to(projectLine, { width: "100%", ease: "expo.out", duration: 1.5, delay: 0.5 })
+            .to(".hero-text .anim-text", { yPercent: 0, stagger: 0.2 })
+            .to(".hero-intro .anim-text", { yPercent: 0, stagger: 0.2 }, '<')
+            .to(projects, { y: 0, opacity: 1 })
+            .to(navLinks, { opacity: 1 }, '<')
+            .call(() => document.body.classList.remove("overflow-h"))
+    }
+}
+
+window.addEventListener("load", () => {
+    document.body.classList.add("overflow-h");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    new PageSetup();
+})
