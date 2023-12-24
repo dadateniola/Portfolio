@@ -63,19 +63,25 @@ class PageSetup {
     }
 
     init() {
+        if (this.checkDeviceType().includes("mobile")) {
+            selectAll(".project").forEach(e => {
+                e.classList.add("mobile");
+            })
+        }
+
         this.load();
     }
 
-
-    static checkDeviceType() {
+    // Methods
+    checkDeviceType() {
         const mobileThreshold = 768;
         const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
         const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
         if (isTouchDevice && screenWidth <= mobileThreshold) {
-            return "is mobile";
+            return "mobile";
         } else {
-            return "is pc";
+            return "pc";
         }
     }
 
@@ -95,6 +101,7 @@ class PageSetup {
         return tag;
     }
 
+    // Animations
     load() {
         const tl = gsap.timeline();
         const navLinks = selectAll("header a, header p, .projects h1");

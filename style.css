@@ -265,7 +265,10 @@ header {
 .project-box {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /* grid-template-rows: repeat(3, 1fr); */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     gap: var(--page-padding);
 }
 
@@ -339,6 +342,14 @@ header {
 
 .project:hover .project-text {
     opacity: 1;
+}
+
+.project.mobile .project-text {
+    opacity: 1;
+}
+
+.project.mobile .project-img {
+    filter: saturate(1);
 }
 
 
