@@ -111,7 +111,7 @@ class PageSetup {
         const heroIntro = selectAll(".hero-intro h1");
         const projects = selectAll(".project");
         const projectLine = select(".project-line");
-        const wrapper = select(".wrapper");
+        const loader = select(".loader-box");
 
         heroText.forEach(e => this.assignClones(e));
         heroIntro.forEach(e => this.assignClones(e));
@@ -120,7 +120,7 @@ class PageSetup {
             .set(navLinks, { opacity: 0 })
             .set(projects, { y: 100, opacity: 0 })
             .set(projectLine, { width: 0 })
-            .to(wrapper, { opacity: 0, delay: 1 })
+            .to(loader, { opacity: 0, delay: 1 })
             .call(() => select("loader").classList.add("hide"))
             .to(projectLine, { width: "100%", ease: "expo.out", duration: 1.5, delay: 0.5 })
             .to(".hero-text .anim-text", { yPercent: 0, stagger: 0.2 })
