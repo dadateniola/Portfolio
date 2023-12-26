@@ -29,6 +29,8 @@ const disableLinksAndBtns = (condition = false) => {
     });
 }
 
+gsap.registerPlugin(ScrollTrigger);
+
 function fillImgs() {
     for (let i = 1; i < 6; i++) {
         const project = create('div');
@@ -118,14 +120,51 @@ class PageSetup {
             .set(navLinks, { opacity: 0 })
             .set(projects, { y: 100, opacity: 0 })
             .set(projectLine, { width: 0 })
-            .to(wrapper, { opacity: 0 })
+            .to(wrapper, { opacity: 0, delay: 1 })
             .call(() => select("loader").classList.add("hide"))
             .to(projectLine, { width: "100%", ease: "expo.out", duration: 1.5, delay: 0.5 })
             .to(".hero-text .anim-text", { yPercent: 0, stagger: 0.2 })
             .to(".hero-intro .anim-text", { yPercent: 0, stagger: 0.2 }, '<')
             .to(projects, { y: 0, opacity: 1 })
             .to(navLinks, { opacity: 1 }, '<')
-            .call(() => document.body.classList.remove("overflow-h"))
+            .call(() => {
+                document.body.classList.remove("overflow-h");
+                this.scroll();
+            })
+    }
+
+    scroll() {
+        selectAll(".scroll-anim").forEach(parent => {
+            const textTl = gsap.timeline();
+            const text = selectAllWith(parent, "h1, p, a");
+
+            gsap.set(text, { opacity: 0, y: 30 })
+
+            textTl
+                .to(text, { opacity: 1, y: 0, stagger: 0.1 })
+
+            ScrollTrigger.create({
+                trigger: parent,
+                animation: textTl,
+                start: 'top 60%',
+            })
+        })
+
+        const tl = gsap.timeline();
+        const skills = selectAll(".skill");
+        const skillHeads = selectAll(".skills-head")
+
+        tl
+            .set(skillHeads, { opacity: 0, y: 20 })
+            .set(skills, { opacity: 0 })
+            .to(skillHeads, { opacity: 1, y: 0, stagger: 0.1 })
+            .to(skills, { opacity: 1, stagger: 0.05 })
+
+        ScrollTrigger.create({
+            trigger: ".skills",
+            animation: tl,
+            start: 'top 50%',
+        })
     }
 }
 
