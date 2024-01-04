@@ -41,6 +41,8 @@ class PageSetup {
         this.projects = selectAll(".project, .main-project");
         this.projectLine = select(".project-line");
         this.loader = select(".loader-box");
+
+        this.mainProjects = selectAll(".main-project");
     }
 
     init() {
@@ -55,7 +57,70 @@ class PageSetup {
             })
         }
 
+        if (this.page == "projects") {
+            this.mainProjects.forEach(project => {
+                project.addEventListener("mouseenter", (e) => {
+                    carouselTimeline = PageSetup.startCarousel(e);
+                });
+                project.addEventListener("mouseleave", PageSetup.stopCarousel);
+            })
+        }
+
         this.load();
+    }
+
+
+    //Methods
+    static startCarousel(e) {
+        const parent = e instanceof Event ? e.target : e;
+        const holder = selectWith(parent, ".main-project-img");
+        const maxSlide = 3;
+        const folder = parent.dataset?.folder || "stacks";
+
+        const tl = gsap.timeline();
+
+        var currentSlide = parseInt(holder.dataset?.slide) || slideStart;
+        currentSlide = (currentSlide % maxSlide == 0) ? slideStart : currentSlide + 1;
+        holder.dataset.slide = currentSlide;
+
+        const img = create("img");
+        img.src = `../assets/images/${folder}/${currentSlide}.png`;
+
+        tl
+            .set(img, { scale: 1.4, opacity: 0 })
+
+            .call(() => holder.appendChild(img))
+
+            .to(img, { opacity: 1 })
+            .to(img, { scale: 1, duration: 3, ease: 'Expo.easeOut' }, '<')
+            .call(() => {
+                selectWith(holder, "img").remove();
+                carouselTimeline = PageSetup.startCarousel(parent);
+            })
+
+        return tl;
+    }
+
+    static stopCarousel(e) {
+        const parent = e instanceof Event ? e.target : e;
+        const holder = selectWith(parent, ".main-project-img");
+        const images = selectAllWith(holder, "img");
+        const folder = parent.dataset?.folder || "stacks";
+        const tl = gsap.timeline();
+
+        carouselTimeline?.kill();
+
+        const img = create("img");
+        img.src = `../assets/images/${folder}/1.png`;
+
+        holder.insertBefore(img, holder.children[0]);
+
+        tl
+            .to(images, { opacity: 0 })
+            .call(() => {
+                images.forEach(e => e.remove());
+                holder.dataset.slide = 1;
+            });
     }
 
 

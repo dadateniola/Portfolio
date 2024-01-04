@@ -59,6 +59,9 @@ const assignClones = (element) => {
 
 gsap.registerPlugin(ScrollTrigger);
 
+const slideStart = 1;
+var carouselTimeline;
+
 const projects = [
     {
         name: "bank infinity",

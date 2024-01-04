@@ -390,14 +390,21 @@ header {
 .main-project {
     --color: #ffffff;
     display: flex;
-    gap: 5vw;
+    justify-content: space-between;
     padding: 50px 0;
     border-bottom: 1px solid var(--border-color);
 }
 
 .main-project-img {
-    width: 70%;
+    position: relative;
+    width: 66%;
     height: 80vh;
+}
+
+.main-project-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .main-project-text {
@@ -420,6 +427,7 @@ header {
 
 .main-project-cta {
     display: flex;
+    gap: 15px;
     justify-content: space-between;
     align-items: end;
 }
@@ -549,6 +557,10 @@ header {
     font-family: var(--general-reg);
 }
 
+.main-cta {
+    padding: 15px 23px;
+}
+
 
 
 
@@ -639,6 +651,20 @@ footer .container {
     .exp-box-cont {
         padding-right: 0;
     }
+
+    .main-project {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .main-project-img {
+        width: 100%;
+        height: 65vh;
+    }
+
+    .main-project-text {
+        width: 100%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -706,6 +732,16 @@ footer .container {
 
     .about-page-text p {
         font-size: 1.1em;
+    }
+
+    .main-project-text h1 {
+        font-size: 1.2em;
+    }
+
+    .main-cta,
+    .main-project-text p,
+    .main-project-text span {
+        font-size: 0.9em;
     }
 }
 
