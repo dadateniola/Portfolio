@@ -12,7 +12,7 @@
 
 <body>
 
-    <main>
+    <main id="home">
         <loader>
             <div class="loader-box">
                 <svg viewBox="25 25 50 50">
@@ -23,7 +23,7 @@
         <header>
             <div class="indent flex">
                 <div class="name cap">
-                    <a href="/index.html">Dada Teniola ©</a>
+                    <a href="./index.html">Dada Teniola ©</a>
                 </div>
                 <div class="get-in-touch">
                     <p>Get in touch</p>
@@ -31,8 +31,7 @@
                 </div>
             </div>
             <div class="links flex cap">
-                <a href="">projects</a>
-                <a href="./pages/about.html">about</a>
+                <a href="./pages/projects.html">projects</a>
                 <a href="">contact</a>
             </div>
         </header>
@@ -71,7 +70,7 @@
                 </div>
             </div>
         </section>
-        <section class="about line-sm scroll-anim">
+        <section class="about line-sm scroll-anim" id="about-section">
             <div class="indent mt flex">
                 <h1 class="section-head">about me</h1>
                 <div class="about-text">
@@ -80,9 +79,6 @@
                         needs.</h1>
                     <p>With a deep understanding of Full Stack Web Development and a passion for innovative solutions,
                         my main goal is to build meaningful connections within the global tech community.</p>
-                    <div class="contact-cta">
-                        <a href="">read more</a>
-                    </div>
                 </div>
             </div>
         </section>
@@ -275,6 +271,7 @@
 
     <script src="./assets/lib/gsap/gsap.min.js"></script>
     <script src="./assets/lib/gsap/ScrollTrigger.min.js"></script>
+    <script src="common.js"></script>
     <script src="script.js"></script>
 
 </body>

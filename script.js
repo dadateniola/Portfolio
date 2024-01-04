@@ -1,37 +1,8 @@
-const select = (e) => document.querySelector(e);
-const selectAll = (e) => document.querySelectorAll(e);
-const selectWith = (p, e) => p.querySelector(e);
-const selectAllWith = (p, e) => p.querySelectorAll(e);
-const create = (e) => document.createElement(e);
-const root = (e) => getComputedStyle(select(":root")).getPropertyValue(e);
-const getStyle = (e, style) => window.getComputedStyle(e)[style];
-
-const preventDefault = (event) => event.preventDefault();
-const disableLinksAndBtns = (condition = false) => {
-    selectAll('a, button').forEach((element) => {
-        if (condition) {
-            element.setAttribute('disabled', 'true');
-
-            if (element.tagName === 'A') {
-                element.dataset.href = element.href;
-                element.addEventListener('click', preventDefault);
-            }
-        } else {
-            selectAll('a, button').forEach((element) => {
-                element.removeAttribute('disabled');
-
-                if (element.tagName === 'A') {
-                    element.setAttribute('href', element.dataset.href);
-                    element.removeEventListener('click', preventDefault);
-                }
-            });
-        }
-    });
-}
-
-gsap.registerPlugin(ScrollTrigger);
-
 function fillImgs() {
+    const projectBox = select(".project-box");
+
+    if (!projectBox) return;
+
     for (let i = 1; i < 6; i++) {
         const project = create('div');
         const html = `
@@ -51,11 +22,10 @@ function fillImgs() {
         project.classList.add("project")
         project.innerHTML = html;
 
-        select(".project-box").appendChild(project);
+        projectBox.appendChild(project);
     }
 }
 
-fillImgs();
 
 
 class PageSetup {
@@ -64,8 +34,22 @@ class PageSetup {
         this.init();
     }
 
+    parameters() {
+        this.navLinks = selectAll("header a, header p, .projects h1");
+        this.heroText = selectAll(".hero-text p");
+        this.heroIntro = selectAll(".hero-intro h1");
+        this.projects = selectAll(".project, .main-project");
+        this.projectLine = select(".project-line");
+        this.loader = select(".loader-box");
+    }
+
     init() {
-        if (this.checkDeviceType().includes("mobile")) {
+        this.page = select("main")?.id;
+        if (this.page == "home") fillImgs();
+
+        this.parameters();
+
+        if (checkDeviceType().includes("mobile")) {
             selectAll(".project").forEach(e => {
                 e.classList.add("mobile");
             })
@@ -74,59 +58,29 @@ class PageSetup {
         this.load();
     }
 
-    // Methods
-    checkDeviceType() {
-        const mobileThreshold = 768;
-        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-        const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-        if (isTouchDevice && screenWidth <= mobileThreshold) {
-            return "mobile";
-        } else {
-            return "pc";
-        }
-    }
-
-    assignClones(element) {
-        const tagName = element.tagName;
-        const tag = create(tagName);
-
-        tag.innerHTML = element.innerHTML;
-        tag.classList.add("anim-text");
-
-        gsap.set(tag, { yPercent: 100 })
-
-        element.classList.add("overflow-h");
-        element.innerHTML = "";
-        element.appendChild(tag);
-
-        return tag;
-    }
-
-    // Animations
+    //Animations
     load() {
         const tl = gsap.timeline();
-        const navLinks = selectAll("header a, header p, .projects h1");
-        const heroText = selectAll(".hero-text p");
-        const heroIntro = selectAll(".hero-intro h1");
-        const projects = selectAll(".project");
-        const projectLine = select(".project-line");
-        const loader = select(".loader-box");
 
-        heroText.forEach(e => this.assignClones(e));
-        heroIntro.forEach(e => this.assignClones(e));
+        this.heroText.forEach(e => assignClones(e));
+        this.heroIntro.forEach(e => assignClones(e));
 
         tl
-            .set(navLinks, { opacity: 0 })
-            .set(projects, { y: 100, opacity: 0 })
-            .set(projectLine, { width: 0 })
-            .to(loader, { opacity: 0, delay: 1 })
+            .set(this.navLinks, { opacity: 0 })
+            .set(this.projects, { y: 100, opacity: 0 })
+            .set(this.projectLine, { width: 0 })
+
+            .to(this.loader, { opacity: 0 })
+
             .call(() => select("loader").classList.add("hide"))
-            .to(projectLine, { width: "100%", ease: "expo.out", duration: 1.5, delay: 0.5 })
+
+            .to(this.projectLine, { width: "100%", ease: "expo.out", duration: 1.5, delay: 0.5 })
             .to(".hero-text .anim-text", { yPercent: 0, stagger: 0.2 })
             .to(".hero-intro .anim-text", { yPercent: 0, stagger: 0.2 }, '<')
-            .to(projects, { y: 0, opacity: 1 })
-            .to(navLinks, { opacity: 1 }, '<')
+            .to(this.projects, { y: 0, opacity: 1 }, '-=0.5')
+            .to(this.navLinks, { opacity: 1 }, '<')
+
             .call(() => {
                 document.body.classList.remove("overflow-h");
                 this.scroll();
@@ -136,35 +90,43 @@ class PageSetup {
     scroll() {
         selectAll(".scroll-anim").forEach(parent => {
             const textTl = gsap.timeline();
-            const text = selectAllWith(parent, "h1, p, a");
+            const text = selectAllWith(parent, "h1, p, a, span");
+            const projectImg = selectWith(parent, ".main-project-img");
 
-            gsap.set(text, { opacity: 0, y: 30 })
+            textTl.set(text, { opacity: 0, y: 30 });
 
-            textTl
-                .to(text, { opacity: 1, y: 0, stagger: 0.1 })
+            if (projectImg) {
+                textTl.set(projectImg, { opacity: 0 });
+                textTl.to(projectImg, { opacity: 1 });
+            }
+
+            textTl.to(text, { opacity: 1, y: 0, stagger: 0.1 }, "<");
 
             ScrollTrigger.create({
                 trigger: parent,
                 animation: textTl,
-                start: 'top 60%',
+                start: 'top 70%',
             })
         })
 
-        const tl = gsap.timeline();
-        const skills = selectAll(".skill");
-        const skillHeads = selectAll(".skills-head")
+        if (this.page == "home") {
+            const tl = gsap.timeline();
+            const skills = selectAll(".skill");
+            const skillHeads = selectAll(".skills-head")
 
-        tl
-            .set(skillHeads, { opacity: 0, y: 20 })
-            .set(skills, { opacity: 0 })
-            .to(skillHeads, { opacity: 1, y: 0, stagger: 0.1 })
-            .to(skills, { opacity: 1, stagger: 0.05 })
+            tl
+                .set(skillHeads, { opacity: 0, y: 20 })
+                .set(skills, { opacity: 0 })
 
-        ScrollTrigger.create({
-            trigger: ".skills",
-            animation: tl,
-            start: 'top 50%',
-        })
+                .to(skillHeads, { opacity: 1, y: 0, stagger: 0.1 })
+                .to(skills, { opacity: 1, stagger: 0.05 })
+
+            ScrollTrigger.create({
+                trigger: ".skills",
+                animation: tl,
+                start: 'top 70%',
+            })
+        }
     }
 }
 
