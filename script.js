@@ -46,18 +46,19 @@ class PageSetup {
     }
 
     init() {
+        this.isMobile = checkDeviceType().includes("mobile");
         this.page = select("main")?.id;
         if (this.page == "home") fillImgs();
 
         this.parameters();
 
-        if (checkDeviceType().includes("mobile")) {
+        if (this.isMobile) {
             selectAll(".project").forEach(e => {
                 e.classList.add("mobile");
             })
         }
 
-        if (this.page == "projects") {
+        if (this.page == "projects" && !this.isMobile) {
             this.mainProjects.forEach(project => {
                 project.addEventListener("mouseenter", (e) => {
                     carouselTimeline = PageSetup.startCarousel(e);
