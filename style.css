@@ -387,6 +387,11 @@ header {
     filter: saturate(1);
 }
 
+.main-project-box .main-project:last-child {
+    border-bottom: 0;
+    padding-bottom: 30px;
+}
+
 .main-project {
     --color: #ffffff;
     display: flex;
@@ -439,6 +444,23 @@ header {
 
 .main-spcae {
     height: 100vh;
+}
+
+.intro-img {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    margin: 20px 0;
+}
+
+.intro-img::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(var(--dark), 0.2);
 }
 
 
@@ -591,6 +613,30 @@ footer .container {
 
 
 
+.fields {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-row {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    padding-right: 10%;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.field-row > * {
+    width: 50%;
+    flex-grow: 1;
+}
+
+.field-row h1 {
+    font-family: var(--general-reg);
+}
+
+
+
 @media (max-width: 1440px) {
     .project-box {
         grid-template-columns: repeat(2, 1fr);
@@ -629,6 +675,7 @@ footer .container {
         width: 65%;
     }
 
+    .indent .indent.mt,
     .exp-edu .indent.mt,
     .skills .indent.mt {
         flex-direction: row;
@@ -677,6 +724,7 @@ footer .container {
         width: 100%;
     }
 
+    .indent .indent.mt,
     .exp-edu .indent.mt,
     .skills .indent.mt {
         flex-direction: column;
@@ -700,6 +748,14 @@ footer .container {
 
     :root {
         --indentation: auto;
+    }
+
+    .field-row {
+        padding-right: 5%;
+    }
+
+    .intro-img {
+        height: 60vh;
     }
 }
 
@@ -742,6 +798,18 @@ footer .container {
     .main-project-text p,
     .main-project-text span {
         font-size: 0.9em;
+    }
+
+    .field-row {
+        flex-direction: column;
+    }
+
+    .field-row > * {
+        width: 100%;
+    }
+
+    .intro-img {
+        height: 50vh;
     }
 }
 

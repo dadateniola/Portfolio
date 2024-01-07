@@ -64,7 +64,7 @@ var carouselTimeline;
 
 const projects = [
     {
-        name: "bank infinity",
+        name: "bank-infinity",
         folder: "bank-infinity",
         color: "#98F270",
         type: "UI/UX design",

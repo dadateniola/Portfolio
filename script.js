@@ -38,7 +38,7 @@ class PageSetup {
         this.navLinks = selectAll("header a, header p, .projects h1");
         this.heroText = selectAll(".hero-text p");
         this.heroIntro = selectAll(".hero-intro h1");
-        this.projects = selectAll(".project, .main-project");
+        this.projects = selectAll(".project, .main-project, .intro-img");
         this.projectLine = select(".project-line");
         this.loader = select(".loader-box");
 
@@ -64,6 +64,22 @@ class PageSetup {
                     carouselTimeline = PageSetup.startCarousel(e);
                 });
                 project.addEventListener("mouseleave", PageSetup.stopCarousel);
+            })
+        }
+
+        if (this.page == "details") {
+            const urlParams = new URLSearchParams(window.location.search);
+            const contentParam = urlParams.get('content');
+            const matchedProject = projects.find(project => project.name === contentParam);
+            const images = selectAll(".intro-img");
+
+            if (!matchedProject) return window.location.href = "./projects.html";
+
+            images.forEach((parent, index) => {
+                const img = create("img");
+                img.src = `../assets/images/${contentParam}/${index + 1}.png`;
+
+                parent.appendChild(img);
             })
         }
 
