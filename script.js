@@ -41,16 +41,12 @@ class PageSetup {
         this.projects = selectAll(".project, .main-project, .intro-img");
         this.projectLine = select(".project-line");
         this.loader = select(".loader-box");
-
-        this.mainProjects = selectAll(".main-project");
     }
 
     init() {
         this.isMobile = checkDeviceType().includes("mobile");
         this.page = select("main")?.id;
         if (this.page == "home") fillImgs();
-
-        this.parameters();
 
         if (this.isMobile) {
             selectAll(".project").forEach(e => {
@@ -59,7 +55,7 @@ class PageSetup {
         }
 
         if (this.page == "projects" && !this.isMobile) {
-            this.mainProjects.forEach(project => {
+            selectAll(".main-project").forEach(project => {
                 project.addEventListener("mouseenter", (e) => {
                     carouselTimeline = PageSetup.startCarousel(e);
                 });
@@ -75,7 +71,9 @@ class PageSetup {
             this.loadContent(contentParam, matchedProject);
         }
 
-        // this.load();
+        this.parameters();
+
+        this.load();
     }
 
 

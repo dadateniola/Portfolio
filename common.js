@@ -68,7 +68,7 @@ const projects = [
         folder: "bank-infinity",
         color: "#98F270",
         type: "UI/UX design",
-        caseStudy: ['An online banking', 'app for the best and', 'top-notch user experience.'],
+        caseStudy: ['An online banking', 'app for the best and', 'top notch user experience.'],
         desc: "Now principles discovered off increasing how reasonably middletons men. Add seems out man met plate court sense. His joy she worth truth given. All year feet led view went sake.",
         sections: [
             {
@@ -132,7 +132,7 @@ const projects = [
         folder: "stacks",
         color: "#349B92",
         type: "web development",
-        caseStudy: ['a digital experience', 'rooted in a strong story', 'and unique brand purpose.'],
+        caseStudy: ['A digital experience', 'rooted in a strong story', 'and unique brand purpose.'],
         desc: "Difficulty on insensible reasonable in. From as went he they. Preference themselves me as thoroughly partiality considered on in estimating. Middletons acceptance discovered projecting so is so or.",
         sections: [
             {
