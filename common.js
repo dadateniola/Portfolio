@@ -68,13 +68,113 @@ const projects = [
         folder: "bank-infinity",
         color: "#98F270",
         type: "UI/UX design",
+        caseStudy: ['An online banking', 'app for the best and', 'top-notch user experience.'],
         desc: "Now principles discovered off increasing how reasonably middletons men. Add seems out man met plate court sense. His joy she worth truth given. All year feet led view went sake.",
+        sections: [
+            {
+                head: 'details',
+                subHead: [
+                    {
+                        text: 'client',
+                        content: 'dada teniola emmanuel'
+                    },
+                    {
+                        text: 'year',
+                        content: '2022'
+                    },
+                    {
+                        text: 'service',
+                        content: 'Ui/Ux Design'
+                    },
+                    {
+                        text: 'purpose',
+                        content: 'Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit. Voluptates Qui, Vitae Neque Dolore Dolores Sit Ratione Illo Rerum Voluptatum, Rem, Quam Facere Optio! Beatae Tempora Tempore Asperiores Reiciendis Illum Laboriosam!'
+                    },
+                ]
+            },
+            {
+                type: "image"
+            },
+            {
+                head: 'details',
+                heading: 'Lorem Ipsum, Dolor Sit Amet Consectetur Adipisicing Elit. Animi Esse Ipsum Suscipit Rem Porro, Fuga Saepe Incidunt Id Quo Iusto!',
+                subHead: [
+                    {
+                        text: 'details',
+                        content: 'Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat. Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur. Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum.'
+                    },
+                    {
+                        text: 'details',
+                        content: 'Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat. Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur. Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum.'
+                    }
+                ]
+            },
+            {
+                type: "image"
+            },
+            {
+                head: 'body',
+                heading: 'Lorem Ipsum, Dolor Sit Amet Consectetur Adipisicing Elit. Animi Esse Ipsum Suscipit Rem Porro, Fuga Saepe Incidunt Id Quo Iusto!',
+                subHead: [
+                    {
+                        text: 'details',
+                        content: 'Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat. Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur. Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum.'
+                    }
+                ]
+            },
+            {
+                type: "image"
+            },
+        ]
     },
     {
         name: "stacks",
         folder: "stacks",
         color: "#349B92",
         type: "web development",
-        desc: "Difficulty on insensible reasonable in. From as went he they. Preference themselves me as thoroughly partiality considered on in estimating. Middletons acceptance discovered projecting so is so or."
+        caseStudy: ['a digital experience', 'rooted in a strong story', 'and unique brand purpose.'],
+        desc: "Difficulty on insensible reasonable in. From as went he they. Preference themselves me as thoroughly partiality considered on in estimating. Middletons acceptance discovered projecting so is so or.",
+        sections: [
+            {
+                head: 'details',
+                subHead: [
+                    {
+                        text: 'client',
+                        content: 'dada teniola emmanuel'
+                    },
+                    {
+                        text: 'year',
+                        content: '2022'
+                    },
+                    {
+                        text: 'service',
+                        content: 'web development'
+                    },
+                    {
+                        text: 'purpose',
+                        content: 'Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit. Voluptates Qui, Vitae Neque Dolore Dolores Sit Ratione Illo Rerum Voluptatum, Rem, Quam Facere Optio! Reiciendis Illum Laboriosam!'
+                    },
+                ]
+            },
+            {
+                type: "image"
+            },
+            {
+                type: "image"
+            },
+            {
+                head: 'details',
+                heading: 'Lorem Ipsum, Dolor Sit Amet Consectetur Adipisicing Elit. Animi Esse Ipsum Suscipit Rem Porro, Fuga Saepe Incidunt Id Quo Iusto!',
+                subHead: [
+                    {
+                        text: 'body',
+                        content: 'Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat. Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur. Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum.'
+                    }
+                ]
+            },
+            {
+                type: "image"
+            },
+        ]
     }
 ]

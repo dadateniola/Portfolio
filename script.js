@@ -71,19 +71,11 @@ class PageSetup {
             const urlParams = new URLSearchParams(window.location.search);
             const contentParam = urlParams.get('content');
             const matchedProject = projects.find(project => project.name === contentParam);
-            const images = selectAll(".intro-img");
 
-            if (!matchedProject) return window.location.href = "./projects.html";
-
-            images.forEach((parent, index) => {
-                const img = create("img");
-                img.src = `../assets/images/${contentParam}/${index + 1}.png`;
-
-                parent.appendChild(img);
-            })
+            this.loadContent(contentParam, matchedProject);
         }
 
-        this.load();
+        // this.load();
     }
 
 
@@ -138,6 +130,18 @@ class PageSetup {
                 images.forEach(e => e.remove());
                 holder.dataset.slide = 1;
             });
+    }
+
+    insertText(params = {}) {
+        const { type, text, parent, before } = params;
+
+        if (!type || !parent) return null;
+
+        const element = create(type);
+        element.innerHTML = text;
+
+        if (before) parent.insertBefore(element, before);
+        else parent.appendChild(element);
     }
 
 
@@ -210,15 +214,82 @@ class PageSetup {
             })
         }
     }
+
+    //Powerhouse
+    loadContent(contentParam, matchedProject) {
+        //Replace case study
+        const heroIntro = select(".hero-intro");
+        const { caseStudy } = matchedProject;
+
+        for (let i = 0; i < caseStudy.length; i++) this.insertText({ type: "h1", text: caseStudy[i], parent: heroIntro });
+
+        //Add page content
+        const { sections } = matchedProject;
+        for (let i = 0; i < sections.length; i++) {
+            const currentSection = sections[i];
+            const { subHead, type } = currentSection;
+
+            const html = (type) ? this.handleImage() : this.handleText({ currentSection, subHead });
+
+            this.insertText({ type: "section", text: html, parent: select("main"), before: select("footer") })
+        }
+
+        //Add images
+        const images = selectAll(".intro-img");
+
+        if (!matchedProject) return window.location.href = "./projects.html";
+
+        images.forEach((parent, index) => {
+            const img = create("img");
+            img.src = `../assets/images/${contentParam}/${index + 1}.png`;
+
+            parent.appendChild(img);
+        })
+    }
+
+    handleImage() {
+        return '<div class="intro-img img-here"></div>';
+    }
+
+    handleText({ currentSection, subHead }) {
+        var fields = (currentSection.heading) ?
+            `<div class="field-row">
+                <h1>${currentSection.heading}</h1>
+                </div>`
+            : "";
+
+        for (let i = 0; i < subHead?.length; i++) {
+            fields += `
+                <div class="field-row">
+                    <p class="sub">${subHead[i].text}</p>
+                    <p>${subHead[i].content}</p>
+                </div>
+                `
+        }
+
+        const html = `
+            <div class="indent full flex">
+                <div></div>
+                <div class="indent full mt flex">
+                    <h1 class="section-head">${currentSection?.head}</h1>
+                    <div class="fields cap line-bm">
+                        ${fields}
+                    </div>
+                </div>
+            </div>
+            `;
+
+        return html;
+    }
 }
 
 window.addEventListener("load", () => {
-    document.body.classList.add("overflow-h");
+    // document.body.classList.add("overflow-h");
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    // window.scrollTo({
+    //     top: 0,
+    //     behavior: "smooth"
+    // });
 
     new PageSetup();
 })
