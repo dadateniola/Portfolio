@@ -3,8 +3,12 @@ function fillImgs() {
 
     if (!projectBox) return;
 
-    for (let i = 1; i < 6; i++) {
+    for (let i = 0; i < 6; i++) {
+        const current = projects[i];
         const project = create('div');
+        const src = current ? `./assets/images/${current.folder}/1.png` : `./assets/images/project (${i + 1}).png`;
+
+        console.log(src);
         const html = `
                     <div class="project-img img-here">
                         <img src="./assets/images/project (${i + 1}).png" alt="project">
@@ -19,7 +23,7 @@ function fillImgs() {
                         </div>
                     </div>`
 
-        project.classList.add("project")
+        project.classList.add("project");
         project.innerHTML = html;
 
         projectBox.appendChild(project);
@@ -73,7 +77,7 @@ class PageSetup {
 
         this.parameters();
 
-        this.load();
+        // this.load();
     }
 
 
