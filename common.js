@@ -62,7 +62,67 @@ gsap.registerPlugin(ScrollTrigger);
 const slideStart = 1;
 var carouselTimeline;
 
+const PROJECT_SLIDERS = {};
+
 const projects = [
+    {
+        name: "stacks",
+        folder: "stacks",
+        color: "#349B92",
+        type: "web development",
+        caseStudy: ['A centralized', 'platform for seamless', 'and efficient resource-sharing.'],
+        desc: "Difficulty on insensible reasonable in. From as went he they. Preference themselves me as thoroughly partiality considered on in estimating. Middletons acceptance discovered projecting so is so or.",
+        src: 'welcome back.png',
+        sections: [
+            {
+                head: 'details',
+                subHead: [
+                    {
+                        text: 'client',
+                        content: 'babcock university',
+                        link: 'https://www.babcock.edu.ng/'
+                    },
+                    {
+                        text: 'year',
+                        content: '2024'
+                    },
+                    {
+                        text: 'service',
+                        content: 'development and documentation'
+                    },
+                    {
+                        text: 'purpose',
+                        content: 'A final year project, to provide a centralized platform for the upload and retrieval of academic resources.',
+                        no_cap: true
+                    }
+                ]
+            },
+            {
+                type: "video",
+                src: 'sign.mp4',
+                color: '#E25465'
+            },
+            {
+                head: 'details',
+                heading: 'Stacks stops students reliance on WhatsApp groups, Google Classroom, and other informal channels.',
+                subHead: [
+                    {
+                        text: 'responsibilities',
+                        content: 'Worked in a team of three<br><br>Developed both frontend and backend<br><br>Documented the system<br><br>Handled testing and maintenance',
+                        no_cap: true
+                    }
+                ]
+            },
+            {
+                type: "image",
+                src: 'Mobile screens.png'
+            },
+            {
+                type: "image",
+                src: '404.png'
+            },
+        ]
+    },
     {
         name: "tumble",
         folder: "tumble",
@@ -117,118 +177,4 @@ const projects = [
             }
         ]
     },
-    {
-        name: "bank-infinity",
-        folder: "bank-infinity",
-        color: "#98F270",
-        type: "UI/UX design",
-        caseStudy: ['An online banking', 'app for the best and', 'top notch user experience.'],
-        desc: "Now principles discovered off increasing how reasonably middletons men. Add seems out man met plate court sense. His joy she worth truth given. All year feet led view went sake.",
-        sections: [
-            {
-                head: 'details',
-                subHead: [
-                    {
-                        text: 'client',
-                        content: 'dada teniola emmanuel'
-                    },
-                    {
-                        text: 'year',
-                        content: '2022'
-                    },
-                    {
-                        text: 'service',
-                        content: 'Ui/Ux Design'
-                    },
-                    {
-                        text: 'purpose',
-                        content: 'Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit. Voluptates Qui, Vitae Neque Dolore Dolores Sit Ratione Illo Rerum Voluptatum, Rem, Quam Facere Optio! Beatae Tempora Tempore Asperiores Reiciendis Illum Laboriosam!'
-                    },
-                ]
-            },
-            {
-                type: "image"
-            },
-            {
-                head: 'details',
-                heading: 'Lorem Ipsum, Dolor Sit Amet Consectetur Adipisicing Elit. Animi Esse Ipsum Suscipit Rem Porro, Fuga Saepe Incidunt Id Quo Iusto!',
-                subHead: [
-                    {
-                        text: 'details',
-                        content: 'Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat. Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur. Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum.'
-                    },
-                    {
-                        text: 'details',
-                        content: 'Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat. Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur. Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum.'
-                    }
-                ]
-            },
-            {
-                type: "image"
-            },
-            {
-                head: 'body',
-                heading: 'Lorem Ipsum, Dolor Sit Amet Consectetur Adipisicing Elit. Animi Esse Ipsum Suscipit Rem Porro, Fuga Saepe Incidunt Id Quo Iusto!',
-                subHead: [
-                    {
-                        text: 'details',
-                        content: 'Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat. Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur. Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum.'
-                    }
-                ]
-            },
-            {
-                type: "image"
-            },
-        ]
-    },
-    {
-        name: "stacks",
-        folder: "stacks",
-        color: "#349B92",
-        type: "web development",
-        caseStudy: ['A digital experience', 'rooted in a strong story', 'and unique brand purpose.'],
-        desc: "Difficulty on insensible reasonable in. From as went he they. Preference themselves me as thoroughly partiality considered on in estimating. Middletons acceptance discovered projecting so is so or.",
-        sections: [
-            {
-                head: 'details',
-                subHead: [
-                    {
-                        text: 'client',
-                        content: 'dada teniola emmanuel'
-                    },
-                    {
-                        text: 'year',
-                        content: '2022'
-                    },
-                    {
-                        text: 'service',
-                        content: 'web development'
-                    },
-                    {
-                        text: 'purpose',
-                        content: 'Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit. Voluptates Qui, Vitae Neque Dolore Dolores Sit Ratione Illo Rerum Voluptatum, Rem, Quam Facere Optio! Reiciendis Illum Laboriosam!'
-                    },
-                ]
-            },
-            {
-                type: "image"
-            },
-            {
-                type: "image"
-            },
-            {
-                head: 'details',
-                heading: 'Lorem Ipsum, Dolor Sit Amet Consectetur Adipisicing Elit. Animi Esse Ipsum Suscipit Rem Porro, Fuga Saepe Incidunt Id Quo Iusto!',
-                subHead: [
-                    {
-                        text: 'body',
-                        content: 'Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat. Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur. Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum.'
-                    }
-                ]
-            },
-            {
-                type: "image"
-            },
-        ]
-    }
 ]

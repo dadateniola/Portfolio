@@ -30,7 +30,98 @@ function fillImgs() {
     }
 }
 
+class Slider {
+    constructor(params = {}) {
+        Object.assign(this, params);
+        this.init();
+    }
 
+    parameters() {
+        this.projects = selectAll(".main-project");
+    }
+
+    init() {
+        this.parameters();
+
+        this.setupSlides();
+    }
+
+    setupSlides() {
+        this.projects.forEach(project => {
+            const folder = project.getAttribute("data-folder");
+
+            const slider = selectWith(project, '.main-project-img');
+            const slides = selectAllWith(slider, "*");
+
+            slider.setAttribute("data-project", folder);
+
+            PROJECT_SLIDERS[folder] = [];
+
+            slides.forEach((img, index) => {
+                PROJECT_SLIDERS[folder].push(img);
+                if (index > 0) img.remove();
+            });
+        })
+    }
+
+    static startCarousel(e) {
+        const parent = e instanceof Event ? e.target : e;
+        const slider = selectWith(parent, ".main-project-img");
+        const currentSlide = selectWith(slider, "img");
+
+        const folder = parent.dataset?.folder;
+
+        if (!folder) return console.warn("Couldn't find images");
+
+        const max = PROJECT_SLIDERS[folder].length - 1;
+
+        const currentSlideIndex = parseInt(slider.getAttribute("data-index")) || 0;
+        const nextSlideIndex = ((currentSlideIndex + 1) > max) ? 0 : currentSlideIndex + 1;
+        const nextSlide = PROJECT_SLIDERS[folder][nextSlideIndex].cloneNode();
+
+        const tl = gsap.timeline();
+
+        tl
+            .set(nextSlide, { scale: 1.4, opacity: 0 })
+
+            .call(() => slider.appendChild(nextSlide))
+
+            .to(nextSlide, { opacity: 1, duration: 0.3 })
+            .to(nextSlide, { scale: 1, duration: 2.5, ease: 'Expo.easeOut' }, '<')
+            .call(() => {
+                slider.setAttribute("data-index", nextSlideIndex);
+                selectWith(parent, "img").remove();
+                carouselTimeline = Slider.startCarousel(parent);
+            })
+
+        return tl;
+    }
+
+    static stopCarousel(e) {
+        const parent = e instanceof Event ? e.target : e;
+        const slider = selectWith(parent, ".main-project-img");
+        const slides = selectAllWith(slider, "*");
+
+        const folder = parent.dataset?.folder;
+
+        if (!folder) return console.warn("Couldn't find images");
+
+        carouselTimeline?.kill();
+
+        const firstSlide = PROJECT_SLIDERS[folder][0].cloneNode();
+        gsap.set(firstSlide, { opacity: 1, scale: 1 })
+        slider.insertBefore(firstSlide, slider.children[0]);
+
+        const tl = gsap.timeline();
+
+        tl
+            .to(slides, { opacity: 0 })
+            .call(() => {
+                slider.setAttribute("data-index", 0);
+                slides.forEach(e => e.remove())
+            });
+    }
+}
 
 class PageSetup {
     constructor(params = {}) {
@@ -61,9 +152,11 @@ class PageSetup {
         if (this.page == "projects" && !this.isMobile) {
             selectAll(".main-project").forEach(project => {
                 project.addEventListener("mouseenter", (e) => {
-                    carouselTimeline = PageSetup.startCarousel(e);
+                    // carouselTimeline = PageSetup.startCarousel(e);
+                    carouselTimeline = Slider.startCarousel(e);
                 });
-                project.addEventListener("mouseleave", PageSetup.stopCarousel);
+                // project.addEventListener("mouseleave", PageSetup.stopCarousel);
+                project.addEventListener("mouseleave", Slider.stopCarousel);
             })
         }
 
@@ -82,58 +175,6 @@ class PageSetup {
 
 
     //Methods
-    static startCarousel(e) {
-        const parent = e instanceof Event ? e.target : e;
-        const holder = selectWith(parent, ".main-project-img");
-        const maxSlide = 3;
-        const folder = parent.dataset?.folder || "stacks";
-
-        const tl = gsap.timeline();
-
-        var currentSlide = parseInt(holder.dataset?.slide) || slideStart;
-        currentSlide = (currentSlide % maxSlide == 0) ? slideStart : currentSlide + 1;
-        holder.dataset.slide = currentSlide;
-
-        const img = create("img");
-        img.src = `../assets/images/${folder}/${currentSlide}.png`;
-
-        tl
-            .set(img, { scale: 1.4, opacity: 0 })
-
-            .call(() => holder.appendChild(img))
-
-            .to(img, { opacity: 1 })
-            .to(img, { scale: 1, duration: 3, ease: 'Expo.easeOut' }, '<')
-            .call(() => {
-                selectWith(holder, "img").remove();
-                carouselTimeline = PageSetup.startCarousel(parent);
-            })
-
-        return tl;
-    }
-
-    static stopCarousel(e) {
-        const parent = e instanceof Event ? e.target : e;
-        const holder = selectWith(parent, ".main-project-img");
-        const images = selectAllWith(holder, "img");
-        const folder = parent.dataset?.folder || "stacks";
-        const tl = gsap.timeline();
-
-        carouselTimeline?.kill();
-
-        const img = create("img");
-        img.src = `../assets/images/${folder}/1.png`;
-
-        holder.insertBefore(img, holder.children[0]);
-
-        tl
-            .to(images, { opacity: 0 })
-            .call(() => {
-                images.forEach(e => e.remove());
-                holder.dataset.slide = 1;
-            });
-    }
-
     insertText(params = {}) {
         const { type, text, parent, before } = params;
 
@@ -219,38 +260,56 @@ class PageSetup {
 
     //Powerhouse
     loadContent(contentParam, matchedProject) {
+        if (!matchedProject) return window.location.href = "./projects.html";
+
         //Replace case study
         const heroIntro = select(".hero-intro");
-        const { caseStudy } = matchedProject;
+        const { caseStudy, src } = matchedProject;
 
         for (let i = 0; i < caseStudy.length; i++) this.insertText({ type: "h1", text: caseStudy[i], parent: heroIntro });
+
+        //Add intro image
+        const introImg = create("img");
+        introImg.src = `../assets/images/${contentParam}/${src}`;
+        select(".projects .intro-img").appendChild(introImg);
 
         //Add page content
         const { sections } = matchedProject;
         for (let i = 0; i < sections.length; i++) {
             const currentSection = sections[i];
-            const { subHead, type } = currentSection;
+            const { subHead, type, src, color } = currentSection;
 
-            const html = (type) ? this.handleImage() : this.handleText({ currentSection, subHead });
+            const html = (type) ?
+                this.handleImgVid({ src, type, folder: contentParam, color }) :
+                this.handleText({ currentSection, subHead });
 
             this.insertText({ type: "section", text: html, parent: select("main"), before: select("footer") })
         }
-
-        //Add images
-        const images = selectAll(".intro-img");
-
-        if (!matchedProject) return window.location.href = "./projects.html";
-
-        images.forEach((parent, index) => {
-            const img = create("img");
-            img.src = `../assets/images/${contentParam}/${index + 1}.png`;
-
-            parent.appendChild(img);
-        })
     }
 
-    handleImage() {
-        return '<div class="intro-img img-here"></div>';
+    handleImgVid(params = {}) {
+        const { src, type, folder, color } = params;
+
+        if (type == 'image') {
+            return `
+                <div class="intro-img img-here">
+                    <img src="../assets/images/${folder}/${src}">
+                </div>
+            `;
+        } else if (type == 'video') {
+            return `
+                <div class="vid-here" style="--color: ${color}">
+                    <video 
+                        src="../assets/videos/${folder}/${src}" autoplay
+                        muted
+                        loop
+                        playsinline
+                    >
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            `;
+        } else return '';
     }
 
     handleText({ currentSection, subHead }) {
@@ -261,10 +320,18 @@ class PageSetup {
             : "";
 
         for (let i = 0; i < subHead?.length; i++) {
+            const { text, no_cap, content, link } = subHead[i];
+            const tag = link ? 'a' : 'p';
+
             fields += `
                 <div class="field-row">
-                    <p class="sub">${subHead[i].text}</p>
-                    <p>${subHead[i].content}</p>
+                    <p class="sub">${text}</p>
+                    <${tag} 
+                        ${link ? `href="${link}" target="_blank"` : ''}
+                        ${no_cap ? 'class="no-cap"' : ''}
+                    >
+                        ${content}
+                    </${tag}>
                 </div>
                 `
         }
@@ -285,6 +352,7 @@ class PageSetup {
     }
 }
 
+
 window.addEventListener("load", () => {
     // document.body.classList.add("overflow-h");
 
@@ -293,5 +361,6 @@ window.addEventListener("load", () => {
     //     behavior: "smooth"
     // });
 
+    new Slider();
     new PageSetup();
 })
