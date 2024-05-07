@@ -170,7 +170,7 @@ class PageSetup {
 
         this.parameters();
 
-        // this.load();
+        this.load();
     }
 
 

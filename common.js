@@ -100,7 +100,10 @@ const projects = [
             {
                 type: "video",
                 src: 'sign.mp4',
-                color: '#E25465'
+            },
+            {
+                type: "video",
+                src: 'student.mp4',
             },
             {
                 head: 'details',
@@ -116,6 +119,53 @@ const projects = [
             {
                 type: "image",
                 src: 'Mobile screens.png'
+            },
+            {
+                head: 'features',
+                subHead: [
+                    {
+                        text: "Resource Management",
+                        content: "Lecturers can add and manage educational resources.",
+                        no_cap: true
+                    },
+                      {
+                        text: "User Management",
+                        content: "Admins can add new users and edit their information.",
+                        no_cap: true
+                    },
+                      {
+                        text: "Request Handling",
+                        content: "Admins can accept access requests from users.",
+                        no_cap: true
+                    },
+                      {
+                        text: "Additional Features",
+                        content: "Includes search and filter, custom collections, and resource cataloging.",
+                        no_cap: true
+                    }
+                ]
+            },
+            {
+                type: "video",
+                src: 'resources.mp4',
+            },
+            {
+                type: "video",
+                src: 'users.mp4',
+            },
+            {
+                type: "video",
+                src: 'requests.mp4',
+            },
+            {
+                head: 'technologies used',
+                subHead: [
+                    {
+                        text: "heading",
+                        content: "Insert tech stack here...",
+                        no_cap: true
+                    },
+                ]
             },
             {
                 type: "image",

@@ -238,7 +238,7 @@ circle {
     --color: black;
     
     margin: 20px 0;
-    padding: 7vw;
+    padding: 5vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -837,6 +837,10 @@ footer .container {
 
     .intro-img {
         height: 50vh;
+    }
+
+    .vid-here {
+        padding: 1vw;
     }
 }
 
