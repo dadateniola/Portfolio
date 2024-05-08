@@ -158,14 +158,8 @@ const projects = [
                 src: 'requests.mp4',
             },
             {
-                head: 'technologies used',
-                subHead: [
-                    {
-                        text: "heading",
-                        content: "Insert tech stack here...",
-                        no_cap: true
-                    },
-                ]
+                head: 'tools used',
+                stack: ['HTML', 'CSS', 'Javascript', 'GSAP', 'Express JS', 'MySQL']
             },
             {
                 type: "image",

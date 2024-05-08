@@ -8,7 +8,6 @@ function fillImgs() {
         const project = create('div');
         const src = current ? `./assets/images/${current.folder}/1.png` : `./assets/images/project (${i + 1}).png`;
 
-        console.log(src);
         const html = `
                     <div class="project-img img-here">
                         <img src="./assets/images/project (${i + 1}).png" alt="project">
@@ -139,6 +138,11 @@ class PageSetup {
     }
 
     init() {
+        const date = new Date();
+        const year = select("[data-year]");
+
+        if(year) year.innerHTML = '©' + date.getFullYear();
+
         this.isMobile = checkDeviceType().includes("mobile");
         this.page = select("main")?.id;
         if (this.page == "home") fillImgs();
@@ -170,7 +174,7 @@ class PageSetup {
 
         this.parameters();
 
-        this.load();
+        // this.load();
     }
 
 
@@ -277,11 +281,12 @@ class PageSetup {
         const { sections } = matchedProject;
         for (let i = 0; i < sections.length; i++) {
             const currentSection = sections[i];
-            const { subHead, type, src, color } = currentSection;
+            const { subHead, stack, type, src, color } = currentSection;
 
-            const html = (type) ?
-                this.handleImgVid({ src, type, folder: contentParam, color }) :
-                this.handleText({ currentSection, subHead });
+            const html = (stack) ? this.handleStack({ stack, head: currentSection?.head }) :
+                (type) ?
+                    this.handleImgVid({ src, type, folder: contentParam, color }) :
+                    this.handleText({ currentSection, subHead });
 
             this.insertText({ type: "section", text: html, parent: select("main"), before: select("footer") })
         }
@@ -346,7 +351,41 @@ class PageSetup {
                     </div>
                 </div>
             </div>
+        `;
+
+        return html;
+    }
+
+    handleStack(params = []) {
+        const { stack, head } = params;
+        var skills = '';
+
+        for (const item of stack) {
+            skills += `
+                <div class="skill">
+                    <div class="skill-img img-here">
+                        <img src="../assets/icons/${item.toLowerCase()}.png" alt="skill">
+                    </div>
+                    <p>${item}</p>
+                </div>
             `;
+        }
+
+        const html = `
+            <div class="indent full flex stack-skills">
+                <div></div>
+                <div class="indent full mt flex">
+                    <h1 class="section-head">${head}</h1>
+                    <div class="skills-box">
+                        <div class="skills-cont">
+                            <div class="skills-row">
+                                ${skills}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
 
         return html;
     }
