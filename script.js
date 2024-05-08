@@ -267,6 +267,7 @@ class PageSetup {
         if (!matchedProject) return window.location.href = "./projects.html";
 
         //Replace case study
+        const main = select("main#details");
         const heroIntro = select(".hero-intro");
         const { caseStudy, src } = matchedProject;
 

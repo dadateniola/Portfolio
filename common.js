@@ -128,17 +128,17 @@ const projects = [
                         content: "Lecturers can add and manage educational resources.",
                         no_cap: true
                     },
-                      {
+                    {
                         text: "User Management",
                         content: "Admins can add new users and edit their information.",
                         no_cap: true
                     },
-                      {
+                    {
                         text: "Request Handling",
                         content: "Admins can accept access requests from users.",
                         no_cap: true
                     },
-                      {
+                    {
                         text: "Additional Features",
                         content: "Includes search and filter, custom collections, and resource cataloging.",
                         no_cap: true
@@ -165,6 +165,63 @@ const projects = [
                 type: "image",
                 src: '404.png'
             },
+        ]
+    },
+    {
+        name: "travis-hub",
+        folder: "travis-hub",
+        color: "#db0a40",
+        type: "web development",
+        caseStudy: ['Discover Travis', 'Scott: The icon unveiled.'],
+        desc: "It as announcing it me stimulated frequently continuing. Least their she you now above going stand forth.",
+        src: 'home.png',
+        sections: [
+            {
+                head: 'details',
+                subHead: [
+                    {
+                        text: 'client',
+                        content: 'a student',
+                    },
+                    {
+                        text: 'year',
+                        content: '2023'
+                    },
+                    {
+                        text: 'service',
+                        content: 'web development'
+                    },
+                    {
+                        text: 'purpose',
+                        content: 'A showcase of creativity and basic web development skills.',
+                        no_cap: true
+                    }
+                ]
+            },
+            {
+                type: "video",
+                src: 'all pages.mp4',
+            },
+            {
+                type: "video",
+                src: 'events.mp4',
+            },
+            {
+                type: "image",
+                src: 'events.png'
+            },
+            {
+                type: "video",
+                src: 'albums.mp4',
+            },
+            {
+                head: 'tools used',
+                stack: ['HTML', 'CSS', 'Javascript', 'GSAP']
+            },
+            {
+                type: "image",
+                src: 'albums.png'
+            }
         ]
     },
     {
