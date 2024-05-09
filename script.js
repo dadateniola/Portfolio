@@ -178,7 +178,7 @@ class PageSetup {
         if (!projectBox) return;
 
         for (const project of projects) {
-            const div = create('div');
+            const div = create('a');
             const { folder, src, type, name, desc } = project;
             const image = {
                 id: folder + Date.now(),
@@ -200,6 +200,7 @@ class PageSetup {
                 </div>
             `;
 
+            div.href = `./pages/details.html?content=${folder}`
             div.classList.add("project");
             div.innerHTML = html;
 
@@ -357,9 +358,11 @@ class PageSetup {
         for (let i = 0; i < caseStudy.length; i++) this.insertText({ type: "h1", text: caseStudy[i], parent: heroIntro });
 
         //Add intro image
-        const introImg = create("img");
-        introImg.src = `../assets/images/${contentParam}/${src}`;
-        select(".projects .intro-img").appendChild(introImg);
+        const image = {
+            id: 'folder-1234',
+            src: `../assets/images/${contentParam}/${src}`,
+        }
+        PageSetup.loadimages(image);
 
         //Add page content
         const { sections } = matchedProject;
@@ -380,11 +383,19 @@ class PageSetup {
         const { src, type, folder, color } = params;
 
         if (type == 'image') {
-            return `
+            const image = {
+                id: folder + Date.now(),
+                src: `../assets/images/${folder}/${src}`,
+            }
+            const html =  `
                 <div class="intro-img img-here">
-                    <img src="../assets/images/${folder}/${src}">
+                    <div class="pulsate" data-identifier="${image.id}"></div>
                 </div>
             `;
+
+            PageSetup.loadimages(image);
+
+            return html;
         } else if (type == 'video') {
             return `
                 <div class="vid-here" style="--color: ${color}">
@@ -477,12 +488,12 @@ class PageSetup {
 
 
 window.addEventListener("load", () => {
-    // document.body.classList.add("overflow-h");
+    document.body.classList.add("overflow-h");
 
-    // window.scrollTo({
-    //     top: 0,
-    //     behavior: "smooth"
-    // });
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
     new PageSetup();
 })

@@ -71,7 +71,7 @@ const projects = [
         color: "#349B92",
         type: "web development",
         caseStudy: ['A centralized', 'platform for seamless', 'and efficient resource-sharing.'],
-        desc: "Difficulty on insensible reasonable in. From as went he they. Preference themselves me as thoroughly partiality considered on in estimating. Middletons acceptance discovered projecting so is so or.",
+        desc: 'A final year project, to provide a centralized platform for the upload and retrieval of academic resources.',
         src: 'welcome back.png',
         sections: [
             {
@@ -173,7 +173,7 @@ const projects = [
         color: "#db0a40",
         type: "web development",
         caseStudy: ['Discover Travis', 'Scott: The icon unveiled.'],
-        desc: "It as announcing it me stimulated frequently continuing. Least their she you now above going stand forth.",
+        desc: 'A showcase of creativity and basic web development skills.',
         src: 'home.png',
         sections: [
             {
@@ -230,7 +230,7 @@ const projects = [
         color: "#50C878",
         type: "web development",
         caseStudy: ['An innovative video', 'streaming platform for an', 'unparalleled viewing experience.'],
-        desc: "Now principles discovered off increasing how reasonably middletons men. Add seems out man met plate court sense. His joy she worth truth given. All year feet led view went sake.",
+        desc: 'Personal project taken after fullstack web development training.',
         src: 'tumble.png',
         sections: [
             {
@@ -246,7 +246,8 @@ const projects = [
                     },
                     {
                         text: 'purpose',
-                        content: 'Personal project taken after fullstack web development training.'
+                        content: 'Personal project taken after fullstack web development training.',
+                        no_cap: true
                     },
                 ]
             }
