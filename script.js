@@ -8,7 +8,9 @@ class Slider {
         if (!this?.folder) return;
 
         const [data] = projects.filter(item => item.folder == this.folder);
+
         this.intro = `../assets/images/${this.folder}/${data.src}`;
+        this.project = select(`[data-folder="${this.folder}"]`);
 
         const slides = data.sections.filter(({ type }) => type === 'image').map(({ src }) => `../assets/images/${this.folder}/${src}`);
 
@@ -21,10 +23,16 @@ class Slider {
         try {
             const images = await Promise.all(slides.map(Slider.loadImage));
 
-            PROJECT_SLIDERS[this.folder] = [this.intro];
-            images.forEach(img => PROJECT_SLIDERS[this.folder].push(img.src));
+            images.forEach(img => PROJECT_SLIDERS[this.folder].push(img));
 
-            console.log(PROJECT_SLIDERS);
+            this.project.classList.remove("loading");
+
+            if (!images.length) return;
+
+            this.project.addEventListener("mouseenter", (e) => {
+                carouselTimeline = Slider.startCarousel(e);
+            });
+            this.project.addEventListener("mouseleave", Slider.stopCarousel);
         } catch (error) {
             console.error('Error loading images:', error);
         }
@@ -134,14 +142,6 @@ class PageSetup {
         }
 
         if (this.page == "projects" && !this.isMobile) {
-            // selectAll(".main-project").forEach(project => {
-            //     project.addEventListener("mouseenter", (e) => {
-            //         // carouselTimeline = PageSetup.startCarousel(e);
-            //         carouselTimeline = Slider.startCarousel(e);
-            //     });
-            //     // project.addEventListener("mouseleave", PageSetup.stopCarousel);
-            //     project.addEventListener("mouseleave", Slider.stopCarousel);
-            // })
             this.projectList();
         }
 
@@ -155,7 +155,7 @@ class PageSetup {
 
         this.parameters();
 
-        // this.load();
+        this.load();
     }
 
 
@@ -219,7 +219,7 @@ class PageSetup {
             const placeholder = select(`[data-identifier='${id}']`);
             placeholder.replaceWith(image);
 
-            if (run) run();
+            if (run) run(image);
         };
 
         image.onerror = () => {
@@ -241,7 +241,10 @@ class PageSetup {
             const image = {
                 id: folder + Date.now(),
                 src: `../assets/images/${folder}/${src}`,
-                run: () => new Slider({ folder })
+                run: (img) => {
+                    PROJECT_SLIDERS[folder] = [img];
+                    new Slider({ folder });
+                }
             }
 
             const html = `
@@ -260,7 +263,7 @@ class PageSetup {
                 </div>
             `;
 
-            div.classList.add("main-project");
+            div.classList.add("main-project", "loading");
             div.style.setProperty('--color', color);
             div.setAttribute("data-folder", folder);
             div.innerHTML = html;
