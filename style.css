@@ -106,7 +106,7 @@ loader {
     /* display: flex;
     align-items: center;
     justify-content: center; */
-    display: none;
+    /* display: none; */
 }
 
 .loader-box {
@@ -150,6 +150,28 @@ circle {
 
     100% {
         stroke-dashoffset: -125px;
+    }
+}
+
+.pulsate {
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(5, 5, 5);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: rgb(5, 5, 5);
+    }
+
+    50% {
+        background-color: rgb(12, 12, 12);
+    }
+
+    100% {
+        background-color: rgb(5, 5, 5);
     }
 }
 
@@ -236,7 +258,7 @@ circle {
 
 .vid-here {
     --color: black;
-    
+
     margin: 20px 0;
     padding: 5vw;
     display: flex;
@@ -656,7 +678,7 @@ footer .container {
     border-bottom: 1px solid var(--border-color);
 }
 
-.field-row > * {
+.field-row>* {
     width: 50%;
     flex-grow: 1;
 }
@@ -843,7 +865,7 @@ footer .container {
         flex-direction: column;
     }
 
-    .field-row > * {
+    .field-row>* {
         width: 100%;
     }
 

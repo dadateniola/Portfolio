@@ -1,34 +1,3 @@
-function fillImgs() {
-    const projectBox = select(".project-box");
-
-    if (!projectBox) return;
-
-    for (let i = 0; i < 6; i++) {
-        const current = projects[i];
-        const project = create('div');
-        const src = current ? `./assets/images/${current.folder}/1.png` : `./assets/images/project (${i + 1}).png`;
-
-        const html = `
-                    <div class="project-img img-here">
-                        <img src="./assets/images/project (${i + 1}).png" alt="project">
-                    </div>
-                    <div class="project-text">
-                        <div class="project-type cap">
-                            <p>UI/UX Design</p>
-                        </div>
-                        <div class="project-desc">
-                            <p class="cap">name</p>
-                            <p class="project-text-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam totam nulla a. Dicta.</p>
-                        </div>
-                    </div>`
-
-        project.classList.add("project");
-        project.innerHTML = html;
-
-        projectBox.appendChild(project);
-    }
-}
-
 class Slider {
     constructor(params = {}) {
         Object.assign(this, params);
@@ -141,11 +110,13 @@ class PageSetup {
         const date = new Date();
         const year = select("[data-year]");
 
-        if(year) year.innerHTML = '©' + date.getFullYear();
+        if (year) year.innerHTML = '©' + date.getFullYear();
 
         this.isMobile = checkDeviceType().includes("mobile");
         this.page = select("main")?.id;
-        if (this.page == "home") fillImgs();
+        if (this.page == "home") {
+            this.selectedProjects();
+        }
 
         if (this.isMobile) {
             selectAll(".project").forEach(e => {
@@ -191,6 +162,61 @@ class PageSetup {
         else parent.appendChild(element);
     }
 
+    selectedProjects() {
+        const projectBox = select(".project-box");
+
+        if (!projectBox) return;
+
+        for (const project of projects) {
+            const div = create('div');
+            const { folder, src, type, name, desc } = project;
+            const image = {
+                id: folder + Date.now(),
+                src: `../assets/images/${folder}/${src}`,
+            }
+
+            const html = `
+                <div class="project-img img-here">
+                    <div class="pulsate" data-identifier="${image.id}"></div>
+                </div>
+                <div class="project-text">
+                    <div class="project-type cap">
+                        <p>${type}</p>
+                    </div>
+                    <div class="project-desc">
+                        <p class="cap">${name}</p>
+                        <p class="project-text-desc">${desc}</p>
+                    </div>
+                </div>
+            `;
+
+            div.classList.add("project");
+            div.innerHTML = html;
+
+            projectBox.appendChild(div);
+
+            PageSetup.loadimages(image);
+        }
+    }
+
+    static loadimages(data = {}) {
+        const { id, src } = data;
+
+        const image = new Image();
+        image.src = src;
+
+        image.onload = () => {
+            const placeholder = select(`[data-identifier='${id}']`);
+            placeholder.replaceWith(image);
+        };
+        
+        image.onerror = () => {
+            const placeholder = select(`[data-identifier='${id}']`);
+            console.error(`Failed to load image: ${src}`);
+            placeholder.textContent = 'Image not available';
+        };
+    }
+
 
     //Animations
     load() {
@@ -208,7 +234,7 @@ class PageSetup {
 
             .call(() => select("loader").classList.add("hide"))
 
-            .to(this.projectLine, { width: "100%", ease: "expo.out", duration: 1.5, delay: 0.5 })
+            .to(this.projectLine, { width: "100%", ease: "expo.out", duration: 1 })
             .to(".hero-text .anim-text", { yPercent: 0, stagger: 0.2 })
             .to(".hero-intro .anim-text", { yPercent: 0, stagger: 0.2 }, '<')
             .to(this.projects, { y: 0, opacity: 1 }, '-=0.5')
@@ -394,12 +420,12 @@ class PageSetup {
 
 
 window.addEventListener("load", () => {
-    // document.body.classList.add("overflow-h");
+    document.body.classList.add("overflow-h");
 
-    // window.scrollTo({
-    //     top: 0,
-    //     behavior: "smooth"
-    // });
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
     new Slider();
     new PageSetup();

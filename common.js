@@ -231,33 +231,7 @@ const projects = [
         type: "web development",
         caseStudy: ['An innovative video', 'streaming platform for an', 'unparalleled viewing experience.'],
         desc: "Now principles discovered off increasing how reasonably middletons men. Add seems out man met plate court sense. His joy she worth truth given. All year feet led view went sake.",
-        sections: [
-            {
-                head: 'details',
-                subHead: [
-                    {
-                        text: 'year',
-                        content: '2022'
-                    },
-                    {
-                        text: 'service',
-                        content: 'Ui/Ux Design'
-                    },
-                    {
-                        text: 'purpose',
-                        content: 'Personal project taken after fullstack web development training.'
-                    },
-                ]
-            }
-        ]
-    },
-    {
-        name: "treasure-mart",
-        folder: "treasure-mart",
-        color: "#BE1614",
-        type: "web development",
-        caseStudy: ['An innovative video', 'streaming platform for an', 'unparalleled viewing experience.'],
-        desc: "Now principles discovered off increasing how reasonably middletons men. Add seems out man met plate court sense. His joy she worth truth given. All year feet led view went sake.",
+        src: 'tumble.png',
         sections: [
             {
                 head: 'details',
