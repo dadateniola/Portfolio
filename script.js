@@ -4,32 +4,40 @@ class Slider {
         this.init();
     }
 
-    parameters() {
-        this.projects = selectAll(".main-project");
-    }
-
     init() {
-        this.parameters();
+        if (!this?.folder) return;
 
-        this.setupSlides();
+        const [data] = projects.filter(item => item.folder == this.folder);
+        this.intro = `../assets/images/${this.folder}/${data.src}`;
+
+        const slides = data.sections.filter(({ type }) => type === 'image').map(({ src }) => `../assets/images/${this.folder}/${src}`);
+
+        this.loadAllImages({ slides });
     }
 
-    setupSlides() {
-        this.projects.forEach(project => {
-            const folder = project.getAttribute("data-folder");
+    async loadAllImages(data = {}) {
+        const { slides } = data;
 
-            const slider = selectWith(project, '.main-project-img');
-            const slides = selectAllWith(slider, "*");
+        try {
+            const images = await Promise.all(slides.map(Slider.loadImage));
 
-            slider.setAttribute("data-project", folder);
+            PROJECT_SLIDERS[this.folder] = [this.intro];
+            images.forEach(img => PROJECT_SLIDERS[this.folder].push(img.src));
 
-            PROJECT_SLIDERS[folder] = [];
+            console.log(PROJECT_SLIDERS);
+        } catch (error) {
+            console.error('Error loading images:', error);
+        }
+    }
 
-            slides.forEach((img, index) => {
-                PROJECT_SLIDERS[folder].push(img);
-                if (index > 0) img.remove();
-            });
-        })
+    static loadImage = (src) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = src;
+
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(`Failed to load image: ${src}`);
+        });
     }
 
     static startCarousel(e) {
@@ -114,6 +122,7 @@ class PageSetup {
 
         this.isMobile = checkDeviceType().includes("mobile");
         this.page = select("main")?.id;
+
         if (this.page == "home") {
             this.selectedProjects();
         }
@@ -125,14 +134,15 @@ class PageSetup {
         }
 
         if (this.page == "projects" && !this.isMobile) {
-            selectAll(".main-project").forEach(project => {
-                project.addEventListener("mouseenter", (e) => {
-                    // carouselTimeline = PageSetup.startCarousel(e);
-                    carouselTimeline = Slider.startCarousel(e);
-                });
-                // project.addEventListener("mouseleave", PageSetup.stopCarousel);
-                project.addEventListener("mouseleave", Slider.stopCarousel);
-            })
+            // selectAll(".main-project").forEach(project => {
+            //     project.addEventListener("mouseenter", (e) => {
+            //         // carouselTimeline = PageSetup.startCarousel(e);
+            //         carouselTimeline = Slider.startCarousel(e);
+            //     });
+            //     // project.addEventListener("mouseleave", PageSetup.stopCarousel);
+            //     project.addEventListener("mouseleave", Slider.stopCarousel);
+            // })
+            this.projectList();
         }
 
         if (this.page == "details") {
@@ -145,7 +155,7 @@ class PageSetup {
 
         this.parameters();
 
-        this.load();
+        // this.load();
     }
 
 
@@ -184,7 +194,7 @@ class PageSetup {
                         <p>${type}</p>
                     </div>
                     <div class="project-desc">
-                        <p class="cap">${name}</p>
+                        <p class="cap">${name.split("-").join(" ")}</p>
                         <p class="project-text-desc">${desc}</p>
                     </div>
                 </div>
@@ -200,7 +210,7 @@ class PageSetup {
     }
 
     static loadimages(data = {}) {
-        const { id, src } = data;
+        const { id, src, run } = data;
 
         const image = new Image();
         image.src = src;
@@ -208,13 +218,57 @@ class PageSetup {
         image.onload = () => {
             const placeholder = select(`[data-identifier='${id}']`);
             placeholder.replaceWith(image);
+
+            if (run) run();
         };
-        
+
         image.onerror = () => {
             const placeholder = select(`[data-identifier='${id}']`);
-            console.error(`Failed to load image: ${src}`);
             placeholder.textContent = 'Image not available';
+
+            console.error(`Failed to load image: ${src}`);
         };
+    }
+
+    projectList() {
+        const mainProjectBox = select(".main-project-box");
+
+        if (!mainProjectBox) return;
+
+        for (const project of projects) {
+            const div = create('div');
+            const { folder, src, type, name, desc, color } = project;
+            const image = {
+                id: folder + Date.now(),
+                src: `../assets/images/${folder}/${src}`,
+                run: () => new Slider({ folder })
+            }
+
+            const html = `
+                <div class="main-project-img img-here">
+                    <div class="pulsate" data-identifier="${image.id}"></div>
+                </div>
+                <div class="main-project-text">
+                    <div>
+                        <h1>${name.split("-").join(" ")}</h1>
+                        <p>${desc}</p>
+                    </div>
+                    <div class="main-project-cta">
+                        <a class="main-cta" href="./details.html?content=${folder}">view project</a>
+                        <span class="main-type">${type}</span>
+                    </div>
+                </div>
+            `;
+
+            div.classList.add("main-project");
+            div.style.setProperty('--color', color);
+            div.setAttribute("data-folder", folder);
+            div.innerHTML = html;
+
+            mainProjectBox.appendChild(div);
+
+            PageSetup.loadimages(image);
+        }
     }
 
 
@@ -420,13 +474,12 @@ class PageSetup {
 
 
 window.addEventListener("load", () => {
-    document.body.classList.add("overflow-h");
+    // document.body.classList.add("overflow-h");
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    // window.scrollTo({
+    //     top: 0,
+    //     behavior: "smooth"
+    // });
 
-    new Slider();
     new PageSetup();
 })

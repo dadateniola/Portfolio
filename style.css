@@ -106,7 +106,7 @@ loader {
     /* display: flex;
     align-items: center;
     justify-content: center; */
-    /* display: none; */
+    display: none;
 }
 
 .loader-box {
@@ -484,6 +484,10 @@ header {
 .main-project-text h1,
 .main-type {
     color: var(--color);
+}
+
+.main-type {
+    text-transform: capitalize;
 }
 
 .main-spcae {
@@ -871,6 +875,10 @@ footer .container {
 
     .intro-img {
         height: 50vh;
+    }
+
+    .main-project-img {
+        height: 60vh;
     }
 }
 
