@@ -244,7 +244,9 @@ class PageSetup {
                 src: `../assets/images/${folder}/${src}`,
                 run: (img) => {
                     PROJECT_SLIDERS[folder] = [img];
-                    new Slider({ folder });
+                    
+                    if(this.isMobile) div.classList.remove("loading")
+                    else new Slider({ folder });
                 }
             }
 
