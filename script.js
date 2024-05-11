@@ -141,7 +141,7 @@ class PageSetup {
             })
         }
 
-        if (this.page == "projects" && !this.isMobile) {
+        if (this.page == "projects") {
             this.projectList();
         }
 
