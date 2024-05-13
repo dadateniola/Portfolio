@@ -250,7 +250,23 @@ const projects = [
                         no_cap: true
                     },
                 ]
-            }
+            },
+            {
+                type: "video",
+                src: 'home.mp4',
+            },
+            {
+                type: "video",
+                src: 'all pages.mp4',
+            },
+            {
+                type: "video",
+                src: 'video.mp4',
+            },
+            {
+                head: 'tools used',
+                stack: ['HTML', 'CSS', 'Javascript', 'Express JS', 'MySQL']
+            },
         ]
     },
 ]

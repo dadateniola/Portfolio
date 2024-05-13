@@ -117,7 +117,7 @@ class PageSetup {
         this.navLinks = selectAll("header a, header p, .projects h1");
         this.heroText = selectAll(".hero-text p");
         this.heroIntro = selectAll(".hero-intro h1");
-        this.projects = selectAll(".project, .main-project, .intro-img");
+        this.projects = selectAll(".project:not(.no-anim), .main-project, .start-intro");
         this.projectLine = select(".project-line");
         this.loader = select(".loader-box");
     }
@@ -135,12 +135,6 @@ class PageSetup {
             this.selectedProjects();
         }
 
-        if (this.isMobile) {
-            selectAll(".project").forEach(e => {
-                e.classList.add("mobile");
-            })
-        }
-
         if (this.page == "projects") {
             this.projectList();
         }
@@ -151,6 +145,12 @@ class PageSetup {
             const matchedProject = projects.find(project => project.name === contentParam);
 
             this.loadContent(contentParam, matchedProject);
+        }
+
+        if (this.isMobile) {
+            selectAll(".project").forEach(e => {
+                e.classList.add("mobile");
+            })
         }
 
         this.parameters();
@@ -177,37 +177,7 @@ class PageSetup {
 
         if (!projectBox) return;
 
-        for (const project of projects) {
-            const div = create('a');
-            const { folder, src, type, name, desc } = project;
-            const image = {
-                id: folder + Date.now(),
-                src: `../assets/images/${folder}/${src}`,
-            }
-
-            const html = `
-                <div class="project-img img-here">
-                    <div class="pulsate" data-identifier="${image.id}"></div>
-                </div>
-                <div class="project-text">
-                    <div class="project-type cap">
-                        <p>${type}</p>
-                    </div>
-                    <div class="project-desc">
-                        <p class="cap">${name.split("-").join(" ")}</p>
-                        <p class="project-text-desc">${desc}</p>
-                    </div>
-                </div>
-            `;
-
-            div.href = `./pages/details.html?content=${folder}`
-            div.classList.add("project");
-            div.innerHTML = html;
-
-            projectBox.appendChild(div);
-
-            PageSetup.loadimages(image);
-        }
+        for (const project of projects) this.getProject({project, parent: projectBox});
     }
 
     static loadimages(data = {}) {
@@ -244,8 +214,8 @@ class PageSetup {
                 src: `../assets/images/${folder}/${src}`,
                 run: (img) => {
                     PROJECT_SLIDERS[folder] = [img];
-                    
-                    if(this.isMobile) div.classList.remove("loading")
+
+                    if (this.isMobile) div.classList.remove("loading")
                     else new Slider({ folder });
                 }
             }
@@ -275,6 +245,44 @@ class PageSetup {
 
             PageSetup.loadimages(image);
         }
+    }
+
+    getProject(data = {}) {
+        const { project, parent, no_anim, path } = data;
+        const { folder, src, type, name, desc } = project;
+        const link = path || './pages/details.html?content=';
+
+        const image = {
+            id: folder + Date.now(),
+            src: `../assets/images/${folder}/${src}`,
+        }
+
+        const div = create('a');
+
+        const html = `
+                <div class="project-img img-here">
+                    <div class="pulsate" data-identifier="${image.id}"></div>
+                </div>
+                <div class="project-text">
+                    <div class="project-type cap">
+                        <p>${type}</p>
+                    </div>
+                    <div class="project-desc">
+                        <p class="cap">${name.split("-").join(" ")}</p>
+                        <p class="project-text-desc">${desc}</p>
+                    </div>
+                </div>
+            `;
+
+        div.href = `${link}${folder}`;
+        div.classList.add("project");
+        div.innerHTML = html;
+        
+        if(no_anim) div.classList.add("no-anim");
+
+        parent.appendChild(div);
+
+        PageSetup.loadimages(image);
     }
 
 
@@ -377,8 +385,26 @@ class PageSetup {
                     this.handleImgVid({ src, type, folder: contentParam, color }) :
                     this.handleText({ currentSection, subHead });
 
-            this.insertText({ type: "section", text: html, parent: select("main"), before: select("footer") })
+            this.insertText({ type: "section", text: html, parent: select("main"), before: select(".next") })
         }
+
+        //Add next project
+        var index = 0;
+        for (let i = 0; i < projects.length; i++) {
+            if (projects[i].name == matchedProject.name) {
+                index = (projects[i+1]) ? i + 1 : 0;
+                break;
+            }
+        }
+
+        const data = {
+            project: projects[index],
+            parent: select(".next-box"),
+            path: './details.html?content=',
+            no_anim: true
+        }
+
+        this.getProject(data);
     }
 
     handleImgVid(params = {}) {
@@ -389,7 +415,7 @@ class PageSetup {
                 id: folder + Date.now(),
                 src: `../assets/images/${folder}/${src}`,
             }
-            const html =  `
+            const html = `
                 <div class="intro-img img-here">
                     <div class="pulsate" data-identifier="${image.id}"></div>
                 </div>

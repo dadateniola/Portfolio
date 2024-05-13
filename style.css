@@ -349,6 +349,7 @@ header {
     border-top: 2px solid rgba(var(--light), 0.4);
 }
 
+.next-box,
 .project-box {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -357,6 +358,10 @@ header {
     -ms-user-select: none;
     user-select: none;
     gap: var(--page-padding);
+}
+
+.next-box {
+    grid-template-columns: 1fr;
 }
 
 .project {
@@ -902,6 +907,7 @@ footer .container {
         width: 100%;
     }
 
+    .next-box .project-img,
     .intro-img {
         height: 50vh;
     }
