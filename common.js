@@ -225,6 +225,67 @@ const projects = [
         ]
     },
     {
+        name: "treasure-mart",
+        folder: "treasure-mart",
+        color: "#BE1614",
+        type: "web development",
+        caseStudy: ['Dynamic ecommerce', 'showcase with smooth', 'and interactive page transitons.'],
+        desc: 'A personal project to showcase skills in animations and page transitions by developing a dynamic ecommerce site using Barba.js.',
+        src: 'Treasure Mart.png',
+        sections: [
+            {
+                head: 'details',
+                subHead: [
+                    {
+                        text: 'client',
+                        content: 'dada teniola (Me)',
+                    },
+                    {
+                        text: 'year',
+                        content: '2023'
+                    },
+                    {
+                        text: 'service',
+                        content: 'web development'
+                    },
+                    {
+                        text: 'purpose',
+                        content: 'A personal project to showcase skills in animations and page transitions by developing a dynamic ecommerce site using Barba.js.',
+                        no_cap: true
+                    }
+                ]
+            },
+            {
+                type: "video",
+                src: 'page load.mp4',
+            },
+            {
+                type: "video",
+                src: 'sections.mp4',
+            },
+            {
+                type: "image",
+                src: 'products.png',
+            },
+            {
+                type: "video",
+                src: 'product listings.mp4',
+            },
+            {
+                type: "video",
+                src: 'product page.mp4',
+            },
+            {
+                type: "video",
+                src: 'sign pages.mp4',
+            },
+            {
+                head: 'tools used',
+                stack: ['HTML', 'CSS', 'Javascript', 'GSAP', 'Barba JS']
+            },
+        ]
+    },
+    {
         name: "tumble",
         folder: "tumble",
         color: "#50C878",

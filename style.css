@@ -199,8 +199,9 @@ circle {
     text-transform: none;
 }
 
-.sub {
-    color: var(--cadet-gray);
+.sub,
+.sub * {
+    color: var(--cadet-gray) !important;
 }
 
 .indent> :first-child {
