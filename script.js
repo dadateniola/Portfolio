@@ -208,7 +208,7 @@ class PageSetup {
 
         for (const project of projects) {
             const div = create('div');
-            const { folder, src, type, name, desc, color } = project;
+            const { folder, src, type, name, desc, color, sections } = project;
             const image = {
                 id: folder + Date.now(),
                 src: `../assets/images/${folder}/${src}`,
@@ -220,6 +220,8 @@ class PageSetup {
                 }
             }
 
+            const stack = sections.find(section => (section.stack) ?  section.stack : null)?.stack || null;
+
             const html = `
                 <div class="main-project-img img-here">
                     <div class="pulsate" data-identifier="${image.id}"></div>
@@ -228,6 +230,8 @@ class PageSetup {
                     <div>
                         <h1>${name.split("-").join(" ")}</h1>
                         <p>${desc}</p>
+                        <br>
+                        <p>Tools used: ${stack ? stack.join(", ") : 'Will be updated soon'}</p>
                     </div>
                     <div class="main-project-cta">
                         <a class="main-cta" href="./details.html?content=${folder}">view project</a>

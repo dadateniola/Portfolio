@@ -159,7 +159,7 @@ const projects = [
             },
             {
                 head: 'tools used',
-                stack: ['HTML', 'CSS', 'Javascript', 'GSAP', 'Express JS', 'MySQL']
+                stack: ['HTML', 'CSS', 'Javascript', 'GSAP','Node JS', 'Express JS', 'MySQL', 'Photoshop']
             },
             {
                 type: "image",
